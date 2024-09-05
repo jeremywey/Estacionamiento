@@ -1,0 +1,72 @@
+@startuml
+abstract class Persona {
+    - nombre: String
+    - identificacion: String
+    + getNombre(): String
+    + getIdentificacion(): String
+}
+
+class Funcionario extends Persona {
+}
+
+class Estudiante extends Persona {
+}
+
+class Visitante extends Persona {
+}
+
+class Vehiculo {
+    - matricula: String
+    - marca: String
+    - tipoVehiculo: String
+    + getMatricula(): String
+    + getMarca(): String
+    + getTipoVehiculo(): String
+}
+
+class Cubiculo {
+    - numeroCubiculo: int
+    - tipoCubiculo: String
+    - dimensiones: String
+    - estado: String
+    + reservarCubiculo(): void
+    + liberarCubiculo(): void
+    + getNumeroCubiculo(): int
+    + getEstado(): String
+    + getTipoCubiculo(): String
+}
+
+class Registro {
+    - persona: Persona
+    - vehiculo: Vehiculo
+    - cubiculo: Cubiculo
+    - fechaHoraEntrada: LocalDateTime
+    - fechaHoraSalida: LocalDateTime
+    + registrarSalida(): void
+    + toString(): String
+}
+
+class Estacionamiento {
+    - listaCubiculos: ArrayList<Cubiculo>
+    - listaPersonasAutorizadas: ArrayList<Persona>
+    - listaRegistros: ArrayList<Registro>
+    + agregarCubiculo(cubiculo: Cubiculo): void
+    + agregarPersonaAutorizada(persona: Persona): void
+    + registrarEntrada(persona: Persona, vehiculo: Vehiculo): void
+    + registrarSalida(persona: Persona): void
+    + mostrarRegistros(): void
+    + buscarCubiculoDisponible(): Cubiculo
+}
+
+Persona <|-- Funcionario
+Persona <|-- Estudiante
+Persona <|-- Visitante
+
+Estacionamiento "1" o--  Cubiculo
+Estacionamiento "1" o--  Persona
+Estacionamiento "1" o--  Registro
+
+Registro "1" *-- "1" Persona
+Registro "1" *-- "1" Vehiculo
+Registro "1" *-- "1" Cubiculo
+@enduml
